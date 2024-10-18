@@ -1,5 +1,6 @@
 
 import java.sql.*;
+import java.util.*;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -105,6 +106,25 @@ public class DAO {
         return voteCount;
     }
     
+    public ArrayList getAllData(){
+        //creating an Array List to store all data retrived 
+        ArrayList<String> allData = new ArrayList<>();
+        
+        String selectAllSQL = "SELECT * FROM Car_Votes";
+        
+        try(PreparedStatement pstms = conn.prepareStatement(selectAllSQL)){
+            
+            ResultSet result = pstms.executeQuery();
+            
+            while(result.next()){
+                allData.add(result.getString(1) + result.getInt(2));
+                    
+            }
+        }catch(SQLException ioe){
+            ioe.getMessage();
+        }
     
+        return allData;
+    }
     
 }

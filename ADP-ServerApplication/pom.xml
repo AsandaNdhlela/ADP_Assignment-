@@ -11,4 +11,13 @@
         <maven.compiler.target>21</maven.compiler.target>
         <exec.mainClass>ADPServerApplication</exec.mainClass>
     </properties>
+    <!-- https://mvnrepository.com/artifact/org.apache.derby/derbyclient -->
+    <dependencies>
+        <dependency>
+        <groupId>org.apache.derby</groupId>
+        <artifactId>derbyclient</artifactId>
+        <version>10.14.2.0</version>
+    </dependency>
+    </dependencies>
+
 </project>

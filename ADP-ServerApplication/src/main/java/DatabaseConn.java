@@ -20,7 +20,7 @@ public class DatabaseConn {
     
     public static Connection DatabaseConn(){
         try{
-            url = "";
+            url = "jdbc:derby://localhost:1527/ADP_Database";
             username = "Administractor";
             password = "admin";
             

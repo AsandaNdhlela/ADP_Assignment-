@@ -54,6 +54,8 @@ public class Server {
     public void communication(){
         try{
             getStreams();
+            
+            
             GUI.displayLog.append("Streams made \n");
             
             GUI.displayLog.append("Waiting for client request... \n");
@@ -61,29 +63,29 @@ public class Server {
             GUI.displayLog.append("Reading the client request and value \n");
 
             String readRequest[] = request.split("#");
+           
+            GUI.displayLog.append("Client has requested to: "+ readRequest[0] + " " + readRequest[1] + "\n");
             
-            String methodToPerform = readRequest[0];
-            GUI.displayLog.append("Client has requested to: "+ methodToPerform + "\n");
-
-            String value = readRequest[1];
-            
-            
-            if(methodToPerform.equalsIgnoreCase("add")){
+            if(readRequest[0].equalsIgnoreCase("add")){
                 //call the insert method from dao and insert the value read
+                DAO runDAO = new DAO();
+                runDAO.insert(readRequest[1]);
+                
             }
             
-            if(methodToPerform.equalsIgnoreCase("vote")){
+            if(readRequest[0].equalsIgnoreCase("vote")){
                 //call the method to update the vote of a car give 
             }
             
-            if(methodToPerform.equalsIgnoreCase("view")){
+            if(readRequest[0].equalsIgnoreCase("view")){
                 //call the method select from dao to view the data vailable
                 //ArrayList
                 //for each loop
                 //send Method
             }
             
-            if(methodToPerform.equalsIgnoreCase("exit")){
+            if(readRequest[0].equalsIgnoreCase("exit")){
+                
                 closeStreamsAndConnection();
             }
            

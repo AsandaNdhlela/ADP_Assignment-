@@ -92,15 +92,15 @@ import javax.swing.table.*;
             Client.out.writeObject(msg);
             Client.out.flush();
         }catch(IOException ioe){}
-        
     }
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         
         if(e.getSource() == add){
             String value = JOptionPane.showInputDialog(null, "Enter new car");
             if(JOptionPane.OK_OPTION == 0){
-                String requestAndValue = "add " + value;
+                String requestAndValue = "add#" + value;
                 sendData(requestAndValue);
                 JOptionPane.showMessageDialog(null, "Request Made");
             }

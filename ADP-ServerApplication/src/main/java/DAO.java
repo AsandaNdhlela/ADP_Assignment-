@@ -19,7 +19,20 @@ public class DAO {
     public DAO(){
         conn = DatabaseConn.DatabaseConn();
         GUI.displayLog.append("Database connection is established \n");
+       
+    }
+    
+    public void createTable(){
+        String createSQL = "CREATE TABLE Car_Votes (Car_Name VARCHAR(25), Votes INTEGER)"; // Removed extra parenthesis
+        
+        try(PreparedStatement pstmt = conn.prepareStatement(createSQL)){
+            
+            GUI.displayLog.append("Database connection is established \n");
+            pstmt.executeUpdate();
+            GUI.displayLog.append("Database connection is established \n");
 
+        
+        }catch(SQLException ioe){}
     }
     
     public void insert(String carname){
@@ -27,7 +40,7 @@ public class DAO {
         initialVote = 0;
         
         //sql query
-        String insertSQL = "INSERT INTO Car_Votes Car_Name VALUE (?,?) ";
+        String insertSQL = "INSERT INTO Car_Votes (Car_Name, Votes) VALUES (?, ?)";
         
         //using the try-with-resources to create the Prepared Statement for automatic 
         //closing when done executing the sql query

@@ -62,7 +62,49 @@ public class DAO {
     }
     
     public void update(String carname){
-    
+        
+        String updateSQL = "UPDATE SET Votes = ? Where Car_name = ?";
+        
+        try(PreparedStatement pstmt = conn.prepareStatement(updateSQL)){
+            
+           //caliing a getCurrentVotes method that retrieves the
+           //current votes for a car provided
+           int vote = getCurrentVotes(carname);
+           //incrementing the the previous vote by 1 
+           int newVote = vote++;
+           
+           //paasing the updated votes for the specified car 
+           pstmt.setInt(1, newVote);
+           pstmt.setString(2, carname);
+           
+           pstmt.executeUpdate();
+           GUI.displayLog.append("Vote success!! for: " +carname+" \n" );
+            
+        }catch(SQLException ioe){
+            ioe.getMessage();
+        }
     }
+    
+    public int getCurrentVotes(String carname){
+        String selectSQL = "SELECT Votes from Car_Votes Where Car_name = ?";
+        int voteCount = 0;
+        
+        try(PreparedStatement pstmt = conn.prepareStatement(selectSQL)){
+            //provide the name of the to retrive the matching votes for it
+            pstmt.setString(1, carname);
+            
+            ResultSet results = pstmt.executeQuery();
+            
+            if(results.next()){
+                voteCount = results.getInt("Votes");
+            }
+                        
+        }catch(SQLException ioe){
+            ioe.getMessage();
+        }
+        return voteCount;
+    }
+    
+    
     
 }

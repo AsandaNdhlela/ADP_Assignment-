@@ -100,7 +100,7 @@ import javax.swing.table.*;
         if(e.getSource() == add){
             String value = JOptionPane.showInputDialog(null, "Enter new car");
             if(JOptionPane.OK_OPTION == 0){
-                String requestAndValue = "add#" + value;
+                String requestAndValue = "Add#" + value;
                 sendData(requestAndValue);
                 JOptionPane.showMessageDialog(null, "Request Made");
             }
@@ -108,8 +108,9 @@ import javax.swing.table.*;
         
         if(e.getSource() == vote){
             String carToVoteFor = (String)comboBox.getSelectedItem();
-            String requestAndValue = "vote " + carToVoteFor;
+            String requestAndValue = "Vote#" + carToVoteFor;
             sendData(requestAndValue);
+            JOptionPane.showMessageDialog(null, "Request Made");
         }
         
         if(e.getSource() == view){

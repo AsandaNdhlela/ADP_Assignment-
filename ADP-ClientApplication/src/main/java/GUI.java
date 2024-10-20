@@ -43,20 +43,20 @@ import javax.swing.table.*;
         selectCarLabel = new JLabel("Select Car To Vote For");
         
         //constructing comboBox
-        Client client = new Client();
+        //Client client = new Client();
 
         comboBox = new JComboBox<>();
-        client.displayInTheComboBox(comboBox);
+        //client.displayInTheComboBox(comboBox);
         
         //constructing table
         model = new DefaultTableModel();
         table = new JTable(model);
-        client.displayDataInTable(table);
+        //client.displayDataInTable(table);
         scrollPane = new JScrollPane(table);
         
         //adding columns to the Table 
-        //model.addColumn("Car Names");
-        //model.addColumn("Car Vote");
+        model.addColumn("Car Names");
+        model.addColumn("Car Vote");
     }
     
     public void setGUI(){
@@ -102,12 +102,18 @@ import javax.swing.table.*;
     @Override
     public void actionPerformed(ActionEvent e) {
         
+        Client client = new Client();
+
+        
         if(e.getSource() == add){
             String value = JOptionPane.showInputDialog(null, "Enter new car");
             if(JOptionPane.OK_OPTION == 0){
                 String requestAndValue = "Add#" + value;
                 sendData(requestAndValue);
                 JOptionPane.showMessageDialog(null, "Request Made");
+                
+                client.displayInTheComboBox(comboBox);
+
             }
         }
         
@@ -120,16 +126,18 @@ import javax.swing.table.*;
         
         if(e.getSource() == view){
             //with view we need to retrieve data from the data base
-            String requestAndValue = "Vote#";
+            String requestAndValue = "View#" + "Table";
             sendData(requestAndValue);
             JOptionPane.showMessageDialog(null, "Request Made");
             
             //and display that data into the JTable 
+            client.displayDataInTable(table);
+
         }
         
         if(e.getSource() == exit){
             //with view we need to retrieve data from the data base
-            String requestAndValue = "Exit#";
+            String requestAndValue = "Exit#" + "Everything ";
             sendData(requestAndValue);
             JOptionPane.showMessageDialog(null, "Request Made");
             

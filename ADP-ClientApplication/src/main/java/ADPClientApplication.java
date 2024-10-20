@@ -21,8 +21,8 @@ public class ADPClientApplication {
         runClientGUI.setDefaultCloseOperation(EXIT_ON_CLOSE);
         
         Client connect = new Client();
-        
         connect.communication();
+
                 
     }
 }

@@ -62,60 +62,61 @@ public class Server {
     public void communication(){
         try{
             getStreams();
-          
-            GUI.displayLog.append("Streams made \n");
+            while (true) {
+                GUI.displayLog.append("Streams made \n");
 
-            GUI.displayLog.append("Waiting for client request... \n");
-            request = (String) in.readObject();
-            GUI.displayLog.append("Reading the client request and value \n");
+                GUI.displayLog.append("Waiting for client request... \n");
+                request = (String) in.readObject();
+                GUI.displayLog.append("Reading the client request and value \n");
 
-            String readRequest[] = request.split("#");
+                String readRequest[] = request.split("#");
 
-            GUI.displayLog.append("Client has requested to: "+ readRequest[0] + " " + readRequest[1] + "\n");
-
-            if(readRequest[0].equalsIgnoreCase("Add")){
-                GUI.displayLog.append("Client has requested to: "+ readRequest[0] + "\n");
-
-                //call the insert method from dao and insert the value read
-                DAO runDAO = new DAO();
-                runDAO.insert(readRequest[1]);
+                GUI.displayLog.append("Client has requested to: " + readRequest[0] + " " + readRequest[1] + "\n");
                 
-                //as soon as you add it, it will be displayed in the JComboBox
-                ArrayList<String> carNames = runDAO.getAllCarNames();  
-                out.writeObject(carNames);
+               // if (readRequest[0].equalsIgnoreCase("Exit")){
 
-            }
+                    if (readRequest[0].equalsIgnoreCase("Add")) {
+                        GUI.displayLog.append("Client has requested to: " + readRequest[0] + "\n");
 
-            if(readRequest[0].equalsIgnoreCase("Vote")){
-                GUI.displayLog.append("Client has requested to: "+ readRequest[0] + "\n");
+                        //call the insert method from dao and insert the value read
+                        DAO runDAO = new DAO();
+                        runDAO.insert(readRequest[1]);
 
-                //call the method to update the vote of a car give 
-                DAO runDAO = new DAO();
-                runDAO.update(readRequest[1]);
-            }
+                        //as soon as you add it, it will be displayed in the JComboBox
+                        ArrayList<String> carNames = runDAO.getAllCarNames();
+                        out.writeObject(carNames);
 
-            if(readRequest[0].equalsIgnoreCase("View")){
-                GUI.displayLog.append("Client has requested to: "+ readRequest[0] + "\n");
+                    }
 
-                
-                //getting all car names and matching votes
-                DAO runDAO = new DAO();
-                ArrayList<String[]> allData = runDAO.getAllData();
-                
-                //send it to the client 
-                out.writeObject(allData);
+                    if (readRequest[0].equalsIgnoreCase("Vote")) {
+                        GUI.displayLog.append("Client has requested to: " + readRequest[0] + "\n");
 
+                        //call the method to update the vote of a car give 
+                        DAO runDAO = new DAO();
+                        runDAO.update(readRequest[1]);
+                    }
 
+                    if (readRequest[0].equalsIgnoreCase("View")) {
+                        GUI.displayLog.append("Client has requested to: " + readRequest[0] + "\n");
 
-                //ArrayList
-                //for each loop
-                //send Method
-            }
+                        //getting all car names and matching votes
+                        DAO runDAO = new DAO();
+                        ArrayList<String[]> allData = runDAO.getAllData();
 
-            if(readRequest[0].equalsIgnoreCase("Exit")){
-                GUI.displayLog.append("Client has requested to: "+ readRequest[0] + "\n");
-                closeStreamsAndConnection();
-                System.exit(0);
+                        //send it to the client 
+                        out.writeObject(allData);
+
+                        //ArrayList
+                        //for each loop
+                        //send Method
+                    }
+
+                    if (readRequest[0].equalsIgnoreCase("Exit")) {
+                        GUI.displayLog.append("Client has requested to: " + readRequest[0] + "\n");
+                        closeStreamsAndConnection();
+                        System.exit(0);
+                    }
+               // } //break;
             }
                     
         }catch(IOException | ClassNotFoundException ioe){

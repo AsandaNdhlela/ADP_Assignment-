@@ -65,7 +65,7 @@ public class DAO {
     
     public void update(String carname){
         
-        String updateSQL = "UPDATE SET Votes = ? Where Car_name = ?";
+        String updateSQL = "UPDATE Car_Votes SET Votes = ? WHERE Car_name = ?";
         
         try(PreparedStatement pstmt = conn.prepareStatement(updateSQL)){
             
@@ -73,7 +73,7 @@ public class DAO {
            //current votes for a car provided
            int vote = getCurrentVotes(carname);
            //incrementing the the previous vote by 1 
-           int newVote = vote++;
+           int newVote = vote + 1;
            
            //paasing the updated votes for the specified car 
            pstmt.setInt(1, newVote);

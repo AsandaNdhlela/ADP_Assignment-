@@ -65,7 +65,7 @@ public class Client {
         
         //for each carname in carNames, add it to the combo box
         for(String carname : carNames){
-            comboBox.addItem(carname);
+            GUI.comboBox.addItem(carname);
         }
     }
     
@@ -89,17 +89,17 @@ public class Client {
         //storing the return data 
         ArrayList<String[]> allData = getCarsAndVotesData();
         
-//        DefaultTableModel model = new DefaultTableModel();
+        DefaultTableModel model = new DefaultTableModel();
         
         //creating columns for the JTable 
-        GUI.model.addColumn("Car Name");
-        GUI.model.addColumn("Votes");
+        model.addColumn("Car Name");
+        model.addColumn("Votes");
         
         for(String[] rowData : allData){
-            GUI.model.addRow(rowData);
+            model.addRow(rowData);
         }
         
-        table.setModel(GUI.model);
+        table.setModel(model);
     }
     
     public void communication(){

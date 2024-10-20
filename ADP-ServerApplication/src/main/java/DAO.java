@@ -111,17 +111,17 @@ public class DAO {
         //creating an Array List to store all data retrived 
         ArrayList<String> carNames = new ArrayList<>();
         
-        String selectAllSQL = "SELECT Car_name FROM Car_Votes";
+        String selectCarNamesSQL = "SELECT Car_name FROM Car_Votes";
         
-        try(PreparedStatement pstms = conn.prepareStatement(selectAllSQL)){
+        try(PreparedStatement pstms = conn.prepareStatement(selectCarNamesSQL)){
             
             GUI.displayLog.append("Retreiving all Car names... \n");
             ResultSet result = pstms.executeQuery();
-            GUI.displayLog.append("Success \n");
+            GUI.displayLog.append("Success!! \n");
 
             while(result.next()){
                 
-                carNames.add(result.getString(1));
+                carNames.add(result.getString("Car_name"));
                 
             }
         }catch(SQLException ioe){
@@ -130,4 +130,34 @@ public class DAO {
     
         return carNames;
     }
+    
+    public ArrayList<String[]> getAllData() {
+        
+        ArrayList<String[]> allData = new ArrayList<>();
+        
+        String selectAllSQL = "SELECT Car_Name, Votes FROM Car_Votes";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(selectAllSQL)) {
+            
+            GUI.displayLog.append("Retreiving Car names and matching votes... \n");
+            ResultSet result = pstmt.executeQuery();
+            GUI.displayLog.append("Success!! \n");
+
+
+            while (result.next()) {
+                // Create a String array for each row and add it to the list
+                String[] rowData = new String[2];
+                
+                rowData[0] = result.getString("Car_Name");
+                rowData[1] = String.valueOf(result.getInt("Votes"));
+                
+                allData.add(rowData);
+                
+            }
+        } catch (SQLException ioe) {
+            // Handle exceptions
+        }
+        return allData;
+    }
+
 }

@@ -74,23 +74,38 @@ public class Server {
             GUI.displayLog.append("Client has requested to: "+ readRequest[0] + " " + readRequest[1] + "\n");
 
             if(readRequest[0].equalsIgnoreCase("Add")){
+                GUI.displayLog.append("Client has requested to: "+ readRequest[0] + "\n");
+
                 //call the insert method from dao and insert the value read
                 DAO runDAO = new DAO();
                 runDAO.insert(readRequest[1]);
+                
+                //as soon as you add it, it will be displayed in the JComboBox
+                ArrayList<String> carNames = runDAO.getAllCarNames();  
+                out.writeObject(carNames);
 
             }
 
             if(readRequest[0].equalsIgnoreCase("Vote")){
+                GUI.displayLog.append("Client has requested to: "+ readRequest[0] + "\n");
+
                 //call the method to update the vote of a car give 
                 DAO runDAO = new DAO();
                 runDAO.update(readRequest[1]);
             }
 
             if(readRequest[0].equalsIgnoreCase("View")){
-                //call the method select from dao to view the data vailable
+                GUI.displayLog.append("Client has requested to: "+ readRequest[0] + "\n");
+
+                
+                //getting all car names and matching votes
                 DAO runDAO = new DAO();
-                ArrayList<String> carNames = runDAO.getAllCarNames();  
-                out.writeObject(carNames);
+                ArrayList<String[]> allData = runDAO.getAllData();
+                
+                //send it to the client 
+                out.writeObject(allData);
+
+
 
                 //ArrayList
                 //for each loop
@@ -98,8 +113,9 @@ public class Server {
             }
 
             if(readRequest[0].equalsIgnoreCase("Exit")){
-
+                GUI.displayLog.append("Client has requested to: "+ readRequest[0] + "\n");
                 closeStreamsAndConnection();
+                System.exit(0);
             }
                     
         }catch(IOException | ClassNotFoundException ioe){

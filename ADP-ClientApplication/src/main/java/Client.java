@@ -2,7 +2,8 @@
 import java.io.*;
 import java.net.*;
 import java.util.*;
-import javax.swing.JComboBox;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -38,6 +39,7 @@ public class Client {
         server.close();
     }
     
+    //a method that read the car names that are received from the sever
     public ArrayList<String> getCarNames(){
         
         ArrayList<String> carNames = new ArrayList<>();
@@ -52,7 +54,7 @@ public class Client {
         return carNames;
     }
     
-       //a method that displays all the car name from the database to the combobox
+    //a method that displays all the car names from the database to the combobox
     public void displayInTheComboBox(JComboBox<String> comboBox){
         //
         
@@ -65,6 +67,39 @@ public class Client {
         for(String carname : carNames){
             comboBox.addItem(carname);
         }
+    }
+    
+    // a method that reads the cars and votes received from the server
+    public ArrayList<String[]> getCarsAndVotesData(){
+        ArrayList<String[]> allData = new ArrayList<>();
+        
+        try{
+            
+            allData = (ArrayList<String[]>) in.readObject();
+
+        }catch(IOException | ClassNotFoundException ioe){
+            
+            ioe.getMessage();
+        }
+        return allData;
+    }
+    
+    //a method that displays the data into the JTable
+    public void displayDataInTable(JTable table){
+        //storing the return data 
+        ArrayList<String[]> allData = getCarsAndVotesData();
+        
+//        DefaultTableModel model = new DefaultTableModel();
+        
+        //creating columns for the JTable 
+        GUI.model.addColumn("Car Name");
+        GUI.model.addColumn("Votes");
+        
+        for(String[] rowData : allData){
+            GUI.model.addRow(rowData);
+        }
+        
+        table.setModel(GUI.model);
     }
     
     public void communication(){

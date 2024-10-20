@@ -20,7 +20,7 @@ import javax.swing.table.*;
     private JLabel selectCarLabel;
     protected static JComboBox <String>comboBox;
     private JPanel mainPanel, comboBoxPanel, tablePanel, buttonsPanel;
-    private DefaultTableModel model;
+    protected static DefaultTableModel model;
     private JTable table;
     private JScrollPane scrollPane;
     
@@ -51,11 +51,12 @@ import javax.swing.table.*;
         //constructing table
         model = new DefaultTableModel();
         table = new JTable(model);
+        client.displayDataInTable(table);
         scrollPane = new JScrollPane(table);
         
         //adding columns to the Table 
-        model.addColumn("Car Names");
-        model.addColumn("Car Vote");
+        //model.addColumn("Car Names");
+        //model.addColumn("Car Vote");
     }
     
     public void setGUI(){
@@ -119,6 +120,18 @@ import javax.swing.table.*;
         
         if(e.getSource() == view){
             //with view we need to retrieve data from the data base
+            String requestAndValue = "Vote#";
+            sendData(requestAndValue);
+            JOptionPane.showMessageDialog(null, "Request Made");
+            
+            //and display that data into the JTable 
+        }
+        
+        if(e.getSource() == exit){
+            //with view we need to retrieve data from the data base
+            String requestAndValue = "Exit#";
+            sendData(requestAndValue);
+            JOptionPane.showMessageDialog(null, "Request Made");
             
             //and display that data into the JTable 
         }

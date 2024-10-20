@@ -18,7 +18,7 @@ import javax.swing.table.*;
     
     private JButton add, vote,view,exit;
     private JLabel selectCarLabel;
-    private JComboBox comboBox;
+    protected static JComboBox <String>comboBox;
     private JPanel mainPanel, comboBoxPanel, tablePanel, buttonsPanel;
     private DefaultTableModel model;
     private JTable table;
@@ -43,7 +43,10 @@ import javax.swing.table.*;
         selectCarLabel = new JLabel("Select Car To Vote For");
         
         //constructing comboBox
-        comboBox = new JComboBox();
+        Client client = new Client();
+
+        comboBox = new JComboBox<>();
+        client.displayInTheComboBox(comboBox);
         
         //constructing table
         model = new DefaultTableModel();
@@ -93,6 +96,7 @@ import javax.swing.table.*;
             Client.out.flush();
         }catch(IOException ioe){}
     }
+ 
     
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -115,6 +119,7 @@ import javax.swing.table.*;
         
         if(e.getSource() == view){
             //with view we need to retrieve data from the data base
+            
             //and display that data into the JTable 
         }
         

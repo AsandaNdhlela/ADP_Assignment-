@@ -1,6 +1,8 @@
 
 import java.io.*;
 import java.net.*;
+import java.util.*;
+import javax.swing.JComboBox;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -36,11 +38,41 @@ public class Client {
         server.close();
     }
     
+    public ArrayList<String> getCarNames(){
+        
+        ArrayList<String> carNames = new ArrayList<>();
+        
+        try{
+            carNames = (ArrayList<String>) in.readObject();
+                   
+        }catch(IOException | ClassNotFoundException ioe){
+            
+            ioe.getMessage();
+        }
+        return carNames;
+    }
+    
+       //a method that displays all the car name from the database to the combobox
+    public void displayInTheComboBox(JComboBox<String> comboBox){
+        //
+        
+        ArrayList<String> carNames = getCarNames();
+        
+        //resetting the combo box 
+        comboBox.removeAllItems();
+        
+        //for each carname in carNames, add it to the combo box
+        for(String carname : carNames){
+            comboBox.addItem(carname);
+        }
+    }
+    
     public void communication(){
         try{
             getStreams();
             //get response from server and display those values in JTable
             //arrayList
+
             //for each
         
         }catch(IOException ioe){

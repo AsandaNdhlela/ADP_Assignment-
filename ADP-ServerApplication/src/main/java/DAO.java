@@ -1,6 +1,7 @@
 
 import java.sql.*;
 import java.util.*;
+import javax.swing.*;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -87,7 +88,7 @@ public class DAO {
     }
     
     public int getCurrentVotes(String carname){
-        String selectSQL = "SELECT Votes from Car_Votes Where Car_name = ?";
+        String selectSQL = "SELECT Votes FROM Car_Votes Where Car_name = ?";
         int voteCount = 0;
         
         try(PreparedStatement pstmt = conn.prepareStatement(selectSQL)){
@@ -106,25 +107,27 @@ public class DAO {
         return voteCount;
     }
     
-    public ArrayList getAllData(){
+    public ArrayList getAllCarNames(){
         //creating an Array List to store all data retrived 
-        ArrayList<String> allData = new ArrayList<>();
+        ArrayList<String> carNames = new ArrayList<>();
         
-        String selectAllSQL = "SELECT * FROM Car_Votes";
+        String selectAllSQL = "SELECT Car_name FROM Car_Votes";
         
         try(PreparedStatement pstms = conn.prepareStatement(selectAllSQL)){
             
+            GUI.displayLog.append("Retreiving all Car names... \n");
             ResultSet result = pstms.executeQuery();
-            
+            GUI.displayLog.append("Success \n");
+
             while(result.next()){
-                allData.add(result.getString(1) + result.getInt(2));
-                    
+                
+                carNames.add(result.getString(1));
+                
             }
         }catch(SQLException ioe){
             ioe.getMessage();
         }
     
-        return allData;
+        return carNames;
     }
-    
 }

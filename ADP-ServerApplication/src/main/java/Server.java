@@ -1,6 +1,8 @@
 
 import java.io.*;
 import java.net.*;
+import java.util.*;
+import javax.swing.*;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -51,10 +53,15 @@ public class Server {
         server.close();
     }
     
+    public void sendData(ArrayList<String> msg)throws IOException {
+        out.writeObject(msg);
+        out.flush();
+    }
+        
+    
     public void communication(){
         try{
             getStreams();
-            
           
             GUI.displayLog.append("Streams made \n");
 
@@ -81,6 +88,10 @@ public class Server {
 
             if(readRequest[0].equalsIgnoreCase("View")){
                 //call the method select from dao to view the data vailable
+                DAO runDAO = new DAO();
+                ArrayList<String> carNames = runDAO.getAllCarNames();  
+                out.writeObject(carNames);
+
                 //ArrayList
                 //for each loop
                 //send Method
@@ -90,7 +101,7 @@ public class Server {
 
                 closeStreamsAndConnection();
             }
-        
+                    
         }catch(IOException | ClassNotFoundException ioe){
             ioe.getMessage();
         }
